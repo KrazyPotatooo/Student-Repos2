@@ -138,7 +138,7 @@ class Student {
 
     public function displayAllProvince(){
         try {
-            $sql = "SELECT * FROM province LIMIT 10"; // Modify the table name to match your database
+            $sql = "SELECT * FROM province LIMIT 20"; // Modify the table name to match your database
             $stmt = $this->db->getConnection()->prepare($sql);
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);

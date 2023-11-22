@@ -28,6 +28,8 @@ $province = new Province($db);
         <thead>
             <tr>
                 <th>Province Name</th>
+                <th>Province ID</th>
+                <th>Action</th>
                 
             </tr>
         </thead>
@@ -39,6 +41,7 @@ $province = new Province($db);
             ?>
             <tr>
                 <td><?php echo $result['name']; ?></td>
+                <td><?php echo $result['id']; ?></td>
                 <td>
                     <a href="province_edit.php?id=<?php echo $result['id']; ?>">Edit</a>
                     |
