@@ -204,6 +204,7 @@ class Student {
         }
     }
 
+
     public function testUpdateStudent($id, $data) {
         $success = $this->update($id, $data);
 
