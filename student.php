@@ -71,7 +71,7 @@ class Student {
 
             $stmt = $this->db->getConnection()->prepare($sql);
             // Bind parameters
-            $stmt->bindValue(':id', $data['id']);
+            $stmt->bindValue(':id', $id);
             $stmt->bindValue(':student_number', $data['student_number']);
             $stmt->bindValue(':first_name', $data['first_name']);
             $stmt->bindValue(':middle_name', $data['middle_name']);
