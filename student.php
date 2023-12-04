@@ -23,7 +23,7 @@ class Student {
             $stmt->bindParam(':birthday', $data['birthday']);
 
             // Execute the INSERT query
-            //$stmt->execute();
+             //$stmt->execute();
 
             // Check if the insert was successful
              
@@ -71,7 +71,7 @@ class Student {
 
             $stmt = $this->db->getConnection()->prepare($sql);
             // Bind parameters
-            $stmt->bindValue(':id', $id);
+            $stmt->bindValue(':id', $data['id']);
             $stmt->bindValue(':student_number', $data['student_number']);
             $stmt->bindValue(':first_name', $data['first_name']);
             $stmt->bindValue(':middle_name', $data['middle_name']);
@@ -114,6 +114,12 @@ class Student {
             $stmt = $this->db->getConnection()->prepare($sql);
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+            // Convert gender values
+            foreach ($result as &$student) {
+                $student['gender'] = ($student['gender'] == 1) ? 'M' : 'F';
+            }
+    
             return $result;
         } catch (PDOException $e) {
             // Handle any potential errors here
@@ -122,53 +128,7 @@ class Student {
         }
     }
 
-    public function displayAllTown(){
-        try {
-            $sql = "SELECT * FROM town_city LIMIT 10"; // Modify the table name to match your database
-            $stmt = $this->db->getConnection()->prepare($sql);
-            $stmt->execute();
-            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            return $result;
-        } catch (PDOException $e) {
-            // Handle any potential errors here
-            echo "Error: " . $e->getMessage();
-            throw $e; // Re-throw the exception for higher-level handling
-        }
-    }
-
-    public function displayAllProvince(){
-        try {
-            $sql = "SELECT * FROM province LIMIT 20"; // Modify the table name to match your database
-            $stmt = $this->db->getConnection()->prepare($sql);
-            $stmt->execute();
-            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            return $result;
-        } catch (PDOException $e) {
-            // Handle any potential errors here
-            echo "Error: " . $e->getMessage();
-            throw $e; // Re-throw the exception for higher-level handling
-        }
-    }
-
-    public function displayAllWithDetails() {
-        try {
-            $sql = "SELECT students.*, student_details.* 
-                    FROM students 
-                    LEFT JOIN student_details ON students.id = student_details.student_id
-                    LIMIT 10"; // Modify the limit based on your requirements
-
-            $stmt = $this->db->getConnection()->prepare($sql);
-            $stmt->execute();
-            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-            return $result;
-        } catch (PDOException $e) {
-            // Handle any potential errors here
-            echo "Error: " . $e->getMessage();
-            throw $e; // Re-throw the exception for higher-level handling
-        }
-    }
-
+    
  
     /*
         sample simple tests
@@ -203,7 +163,6 @@ class Student {
             echo "Test failed. Unable to read student data." . PHP_EOL;
         }
     }
-
 
     public function testUpdateStudent($id, $data) {
         $success = $this->update($id, $data);

@@ -1,8 +1,4 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
-
 include_once("../db.php"); // Include the Database class file
 include_once("../student.php"); // Include the Student class file
 include_once("../student_details.php"); // Include the Student class file
@@ -46,8 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         if ($studentDetails->create($studentDetailsData)) {
             echo "Record inserted successfully.";
-            header("location: students.view.php");
-            exit();
+            header('location: students.view.php');
         } else {
             echo "Failed to insert the record.";
         }
@@ -89,12 +84,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <label for="gender">Gender:</label>
         <select name="gender" id="gender" required>
-            <option value="0">M</option>
-            <option value="1">F</option>
+            <option value="0">Male</option>
+            <option value="1">Female</option>
         </select>
 
         <label for="birthday">Birthdate:</label>
-        <input type="date" name="birthday" id="birthday" required value="<?php echo date('M j, Y'); ?>">
+        <input type="date" name="birthday" id="birthday" required>
 
         <label for="contact_number">Contact Number:</label>
         <input type="text" id="contact_number" name="contact_number" required>

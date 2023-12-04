@@ -1,8 +1,6 @@
 <?php
 include_once("../db.php");
-include_once("../student.php");
 include_once("../province.php");
-include_once("../town_city.php");
 
 $db = new Database();
 $connection = $db->getConnection();
@@ -14,7 +12,7 @@ $province = new Province($db);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Records</title>
+    <title>Town/City Records</title>
     <link rel="stylesheet" type="text/css" href="../css/styles.css">
 </head>
 <body>
@@ -23,25 +21,27 @@ $province = new Province($db);
     <?php include('../includes/navbar.php'); ?>
 
     <div class="content">
-    <h2>Student Records</h2>
+    <h2>Province Records</h2>
+    <a class="button-link" href="province_add.php">Add New Record</a>
     <table class="orange-theme">
         <thead>
             <tr>
-                <th>Province Name</th>
-                <th>Province ID</th>
-                <th>Action</th>
-                
+                <th>ID</th>
+                <th>Name </th>
             </tr>
         </thead>
         <tbody>
             <!-- You'll need to dynamically generate these rows with data from your database -->
+       
+            
+            
             <?php
-            $results = $student->displayAllprovince(); 
+            $results = $province-> getAll();
             foreach ($results as $result) {
             ?>
             <tr>
-                <td><?php echo $result['name']; ?></td>
                 <td><?php echo $result['id']; ?></td>
+                <td><?php echo $result['name']; ?></td>
                 <td>
                     <a href="province_edit.php?id=<?php echo $result['id']; ?>">Edit</a>
                     |
@@ -54,7 +54,7 @@ $province = new Province($db);
         </tbody>
     </table>
         
-    <a class="button-link" href="province_add.php">Add New Record</a>
+    
 
         </div>
         

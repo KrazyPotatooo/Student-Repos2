@@ -1,31 +1,37 @@
 <?php
 include_once("../db.php"); // Include the Database class file
-include_once("../town_city.php"); 
+include_once("../town_city.php"); // Include the Student class file
 
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
 
-    // Fetch Town City data by ID from the database
+    // Fetch student data by ID from the database
     $db = new Database();
-    $town_city = new TownCity($db);
-    $town_city_Data = $town_city->read($id); 
+    $town = new TownCity($db);
+    $town_id = $town->read($id); // Implement the read method in the Student class
 
-   
-} 
+    if ($town_id) {
+        // The student data is retrieved, and you can pre-fill the edit form with this data.
+    } else {
+        echo "Student not found.";
+    }
+} else {
+    echo "Student ID not provided.";
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $data = [
-        'id' => $_POST['id'],  
+        'id' => $_POST['id'],
         'name' => $_POST['name'],
     ];
 
     $db = new Database();
-    $town_city = new TownCity($db);
+    $town = new TownCity($db);
 
-    // Call the edit method to update the town city data
-    if ($town_city->update($id, $data)) {
+    // Call the edit method to update the student data
+    if ($town->update($id, $data)) {
         echo "Record updated successfully.";
-        header("Location: town_view.php");
+        header('location: town_view.php');
     } else {
         echo "Failed to update the record.";
     }
@@ -37,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../css/styles.css">
-    <title>Edit Student</title>
+    <title>Edit Town/City</title>
 </head>
 <body>
     <!-- Include the header and navbar -->
@@ -45,13 +51,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <?php include('../includes/navbar.php'); ?>
 
     <div class="content">
-    <h2>Edit Student Information</h2>
+    <h2>Edit Town/City Information</h2>
     <form action="" method="post">
-        <input type="hidden" name="id" value="<?php echo $town_city_Data['id']; ?>">
+        <input type="hidden" name="id" value="<?php echo $town_id['id']; ?>">
         
-        
-        <label for="birthday">Name: </label>
-        <input type="text" name="name" id="name" value="<?php echo $town_city_Data['name']; ?>">
+        <label for="name">Name:</label>
+        <input type="text" name="name" id="name" value="<?php echo $town_id['name']; ?>">
         
         <input type="submit" value="Update">
     </form>
